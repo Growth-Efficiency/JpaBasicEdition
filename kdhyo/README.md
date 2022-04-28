@@ -55,3 +55,41 @@
 - 테이블이 아닌 `객체를 대상으로 검색하는 객체 지향 쿼리`
 - SQL을 추상화해서 특정 데이터베이스 SQL 에 의존 x
 - JPQL 을 한마디로 정의하면 `객체 지향 SQL`
+
+## 플러시 (flush)
+- 영속성 컨텍스트를 비지 않는다.
+- 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화한다.
+- 트랜잭션이라는 작업 단위가 중요 -> 커밋 직전에만 동기화하면 된다.
+
+## @Lob
+- 데이터베이스 BLOB, CLOB 타입과 매핑
+  - @Lob 에는 지정할 수 있는 속성이 없다.
+  - 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
+    - CLOB: String, char[], java.sql.CLOB
+    - BLOB: byte[], java.sql.BLOB
+
+## 기본 키 생성 전략 (@GeneratedValue)
+- AUTO: 방언에 따라서 자동 지정 기본 값
+- IDENTITY: 데이터베이스에 생성 위임, mysql
+- SEQUENCE: 데이터베이스 시퀀스 오브젝트 사용, oracle
+  - @SequenceGenerator 필요
+- TABLE: 키 생성용 테이블 사용, 모든 DB에서 사용
+  - @TableGenerator 필요
+
+### IDENTITY 전략 특징
+- 기본 키 생성을 데이터베이스에 위임한다.
+- 주로 MySQL, PostgreSQL, SQL Server, DB2 에서 사용
+  - 예) MySQL 의 AUTO_INCREMENT)
+- JPA는 보통 트랜잭션 커밋 시점에 INSERT SQL 실행
+- AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID 값을 알 수 있음.
+- IDENTITY 전략은 em.persist() 시점에 즉시 INSERT SQL 실행하고 DB에서 식별자를 조회
+
+### SEQUENCE 전략 특징
+- 데이터베이스 시퀀스는 유일한 값을 순서대로 생성하는 특별한 데이터 오브젝트
+  - 예) 오라클 시퀀스
+- 오라클, PostgreSQL, DB2, H2 데이터베이스에서 사용
+
+### TABLE 전략 특징
+- 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 흉내내는 전략
+- 장점: 모든 데이터베이스에 적용 가능
+- 단점: 성능
