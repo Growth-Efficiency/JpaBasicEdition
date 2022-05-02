@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
 	@Id
 	private Long id;
