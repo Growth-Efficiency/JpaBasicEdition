@@ -14,8 +14,20 @@ public class JpaMain {
 
 		tx.begin();
 		try {
-			Member member = em.find(Member.class, 1L);
-			member.setName("modifyName");
+			Movie movie = new Movie();
+			movie.setDirector("aaaa");
+			movie.setActor("bbbb");
+			movie.setName("바람과 함께 사라지다!");
+			movie.setPrice(10000);
+
+			em.persist(movie);
+
+			em.flush();
+			em.clear();
+
+			Movie findMovie = em.find(Movie.class, movie.getId());
+
+			System.out.println("findMovie = " + findMovie);
 
 //			em.persist(member);
 
