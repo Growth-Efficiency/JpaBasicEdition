@@ -1,32 +1,22 @@
-package jpabook.jpashop.domain;
+package hellojpa;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn
-public abstract class Item extends BaseEntity {
+public abstract class Item {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "ITEM_ID")
+	@Id @GeneratedValue
 	private Long id;
 
 	private String name;
 	private int price;
-	private int stockQuantity;
-
-	@ManyToMany(mappedBy = "items")
-	private List<Category> categories = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -40,10 +30,6 @@ public abstract class Item extends BaseEntity {
 		return price;
 	}
 
-	public int getStockQuantity() {
-		return stockQuantity;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -54,9 +40,5 @@ public abstract class Item extends BaseEntity {
 
 	public void setPrice(int price) {
 		this.price = price;
-	}
-
-	public void setStockQuantity(int stockQuantity) {
-		this.stockQuantity = stockQuantity;
 	}
 }
