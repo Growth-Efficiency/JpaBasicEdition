@@ -19,6 +19,10 @@ public class JpaMain {
 			member.setUsername("member1");
 			em.persist(member);
 
+			Member query = em.createQuery("select m from Member m where m.username =: username", Member.class)
+				.setParameter("username", "member1")
+				.getSingleResult();
+
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
