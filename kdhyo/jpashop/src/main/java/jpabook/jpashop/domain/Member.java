@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,9 +14,9 @@ public class Member extends BaseEntity {
 	@Column(name = "MEMBER_ID")
 	private Long id;
 	private String name;
-	private String city;
-	private String street;
-	private String zipcode;
+
+	@Embedded
+	private Address address;
 
 	public Long getId() {
 		return id;
@@ -25,17 +26,6 @@ public class Member extends BaseEntity {
 		return name;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public String getZipcode() {
-		return zipcode;
-	}
 
 	public void setId(Long id) {
 		this.id = id;
@@ -45,15 +35,11 @@ public class Member extends BaseEntity {
 		this.name = name;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }
