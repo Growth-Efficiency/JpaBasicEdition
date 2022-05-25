@@ -14,26 +14,40 @@ public class JpaMain {
 
 		tx.begin();
 		try {
-			Movie movie = new Movie();
-			movie.setDirector("aaaa");
-			movie.setActor("bbbb");
-			movie.setName("바람과 함께 사라지다!");
-			movie.setPrice(10000);
+			Member member = new Member();
+			member.setUsername("member1");
+			member.setHomeAddress(new Address("homeCity", "street", "zipcode"));
 
-			em.persist(movie);
+			member.getFavoriteFoods().add("치킨");
+			member.getFavoriteFoods().add("족발");
+			member.getFavoriteFoods().add("피자");
+
+			member.getAddressEntities().add(new AddressEntity("old1", "street", "10000"));
+			member.getAddressEntities().add(new AddressEntity("old2", "street", "10000"));
+
+			em.persist(member);
 
 			em.flush();
 			em.clear();
 
-			Movie findMovie = em.find(Movie.class, movie.getId());
+			System.out.println("================ START ================");
+			Member findMember = em.find(Member.class, member.getId());
 
-			System.out.println("findMovie = " + findMovie);
+			// homeCity -> NewCity
+			Address a = findMember.getHomeAddress();
+			findMember.setHomeAddress(new Address("NewCity", a.getStreet(), a.getZipcode()));
 
-//			em.persist(member);
+			// 치킨 -> 한식
+			findMember.getFavoriteFoods().remove("치킨");
+			findMember.getFavoriteFoods().add("한식");
+
+//			findMember.getAddressEntities().remove(new AddressEntity("old1", "street", "10000"));
+//			findMember.getAddressEntities().add(new AddressEntity("newCity1", "street", "10000"));
 
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
+			e.printStackTrace();
 		} finally {
 			em.close();
 		}
