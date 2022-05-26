@@ -310,3 +310,9 @@ parent1.getChildren().remove(0);
 ## equals 에서 getter로 호출해야 하는 이유
 - 프록시일 때에는 직접 객체에 접근할 때는 접근이 안된다.
 - JPA 에서는 프록시로 호출할 경우가 많기 때문에 getter로 접근할 수 있게 해주는 게 좋다.
+
+## JPA 서브 쿼리 한계
+- JPA는 WHERE, HAVING 절에서만 서브 쿼리 사용 가능
+- SELECT 절도 가능(하이버네이트에서 지원)
+- FROM 절의 서브 쿼리는 현재 JPQL 에서 불가능
+  - 조인으로 풀 수 있으면 풀어서 해결
